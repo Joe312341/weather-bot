@@ -21,12 +21,13 @@ chatRouter.post('/messages', upload.single(), (req, res) => {
     // no address could be extracted
     if(address === ''){
       // return new Error('No address found');
-      const errorMessage = createErrorMessage('No address found');
+      const errorMessage = createErrorMessage('Make sure you use one of these 3 commands: what\'s the weather in, weather in, weather');
       res.json(errorMessage);
+    } else {
+      getWeather(address).then((result) => {
+        res.json(result);
+      });
     }
-    getWeather(address).then((result) => {
-      res.json(result);
-    });
     break;
   }
   default:
