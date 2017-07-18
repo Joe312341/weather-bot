@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "comma-dangle": "off",
+    "radix": "off"
+  },
+  "env": {
+    "node": true
+  }
+}
