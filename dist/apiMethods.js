@@ -13,6 +13,8 @@ var _helpers = require('./helpers.js');
 
 var _errorMessages = require('./errorMessages');
 
+var _grammar = require('./grammar');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -20,6 +22,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {string} username
  * @return {Object}
  */
+/* global process */
 var greetUser = exports.greetUser = function greetUser(username) {
   return {
     'messages': [{
@@ -35,7 +38,6 @@ var greetUser = exports.greetUser = function greetUser(username) {
  * @param {string} address
  * @return {Promise}
  */
-/* global process */
 var getWeather = exports.getWeather = function getWeather(address) {
 
   var gmapUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + process.env.G_MAP_KEY;
@@ -52,6 +54,8 @@ var getWeather = exports.getWeather = function getWeather(address) {
     var _parsedBody$results$ = parsedBody.results[0].geometry.location,
         lat = _parsedBody$results$.lat,
         lng = _parsedBody$results$.lng;
+    // its questionable which address to use here to make the bot seem most natural
+    // but also correct in all instances with a valid location
 
     locationName = parsedBody.results[0].formatted_address;
     var darkSkyUrl = 'https://api.darksky.net/forecast/' + process.env.DARK_SKY_KEY + '/' + lat + ',' + lng;
@@ -68,7 +72,7 @@ var getWeather = exports.getWeather = function getWeather(address) {
 
     var weatherResponse = { 'messages': [{
         'type': 'text',
-        'text': 'It\'s ' + summary.toLowerCase() + ' and ' + parseInt(temperature) + ' degrees right now in ' + locationName
+        'text': (0, _grammar.pickRandomSentenceStart)() + ' the forecast is ' + summary.toLowerCase() + ' and ' + Math.floor(temperature) + ' degrees right now for ' + locationName
       }] };
 
     return weatherResponse;

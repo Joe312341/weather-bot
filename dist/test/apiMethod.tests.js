@@ -38,17 +38,17 @@ describe('api methods', function () {
   describe('find location', function () {
     it('should contain the location name when query contains: <Location> weather', function () {
       return _chai2.default.request('http://localhost:9000').post('/chat/messages').field('action', 'message').field('user_id', 134234).field('text', 'berlin weather').then(function (res) {
-        expect(res.body.messages[0].text).includes('right now in Berlin');
+        expect(res.body.messages[0].text).includes('right now for Berlin');
       });
     });
     it('should contain the location name when query contains: weather in <Location>', function () {
       return _chai2.default.request('http://localhost:9000').post('/chat/messages').field('action', 'message').field('user_id', 134234).field('text', 'weather in berlin').then(function (res) {
-        expect(res.body.messages[0].text).includes('right now in Berlin');
+        expect(res.body.messages[0].text).includes('right now for Berlin');
       });
     });
     it('should contain the location name when query contains: what\'s the weather in <Location>', function () {
       return _chai2.default.request('http://localhost:9000').post('/chat/messages').field('action', 'message').field('user_id', 134234).field('text', 'what\'s the weather in berlin').then(function (res) {
-        expect(res.body.messages[0].text).includes('right now in Berlin');
+        expect(res.body.messages[0].text).includes('right now for Berlin');
       });
     });
     it('should response with "command hint" when no command is sent', function () {

@@ -2,6 +2,7 @@
 import request from 'request-promise';
 import { createErrorMessage } from './helpers.js';
 import { gMapErrMsg } from './errorMessages';
+import { pickRandomSentenceStart } from './grammar';
 /**
  * Create a welcome message
  * @param {string} username
@@ -39,6 +40,8 @@ export const getWeather = (address) => {
       }
 
       const { lat, lng } = parsedBody.results[0].geometry.location;
+      // its questionable which address to use here to make the bot seem most natural
+      // but also correct in all instances with a valid location
       locationName = parsedBody.results[0].formatted_address;
       const darkSkyUrl = `https://api.darksky.net/forecast/${process.env.DARK_SKY_KEY}/${lat},${lng}`;
 
@@ -53,7 +56,7 @@ export const getWeather = (address) => {
       const weatherResponse = {'messages': [
         {
           'type': 'text',
-          'text': `It's ${summary.toLowerCase()} and ${parseInt(temperature)} degrees right now in ${locationName}`
+          'text': `${pickRandomSentenceStart()} the forecast is ${summary.toLowerCase()} and ${Math.floor(temperature)} degrees right now for ${locationName}`
         }
       ]};
 

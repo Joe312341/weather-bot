@@ -5,6 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 /**
  * Checks if commands are part of the message and acts accordingly
+ * Although "what's the weather in" is not necessary in this case it is
+ * added for completeness purpose and with the intent to improve this
+ * methodology in the future (i.e. created some extract engine)
  * @param {string} message
  * @param {string} command
  * @param {boolean} locationInFront
