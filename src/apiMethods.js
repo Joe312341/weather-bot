@@ -1,4 +1,6 @@
+/* global process */
 import request from 'request-promise';
+import { createErrorMessage } from './helpers.js';
 
 /**
  * Create a welcome message
@@ -29,10 +31,10 @@ export const getWeather = (address) => {
 
   return request(gmapUrl)
     .then((gmapResponse) => {
+      
       const parsedBody = JSON.parse(gmapResponse);
-
       if(parsedBody.results.length === 0){
-        throw new Error('No mathing location');
+        return Promise.reject('This location does not exist!');
       }
 
       const { lat, lng } = parsedBody.results[0].geometry.location;
@@ -60,6 +62,6 @@ export const getWeather = (address) => {
       return responseMessage;
     })
     .catch((err) => {
-      return new Error(err);
+      return createErrorMessage(err);
     });
 };

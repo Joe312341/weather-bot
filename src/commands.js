@@ -6,7 +6,7 @@
  * @return {string}
  */
 const returnAddress = (message) => {
-  const commands = ["what's the weather in", "weather in", "weather"];
+  const commands = ['what\'s the weather in', 'weather in', 'weather'];
   if(message.includes(commands[0])){
     return extractAddress(message, commands[0]);
   } else if (message.includes(commands[1])) {

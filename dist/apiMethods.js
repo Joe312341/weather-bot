@@ -9,6 +9,8 @@ var _requestPromise = require('request-promise');
 
 var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
+var _helpers = require('./helpers.js');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -16,6 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {string} username
  * @return {Object}
  */
+/* global process */
 var greetUser = exports.greetUser = function greetUser(username) {
   return {
     'messages': [{
@@ -37,10 +40,10 @@ var getWeather = exports.getWeather = function getWeather(address) {
   var locationName = void 0;
 
   return (0, _requestPromise2.default)(gmapUrl).then(function (gmapResponse) {
-    var parsedBody = JSON.parse(gmapResponse);
 
+    var parsedBody = JSON.parse(gmapResponse);
     if (parsedBody.results.length === 0) {
-      throw new Error('No mathing location');
+      return Promise.reject('This location does not exist!');
     }
 
     var _parsedBody$results$ = parsedBody.results[0].geometry.location,
@@ -69,6 +72,6 @@ var getWeather = exports.getWeather = function getWeather(address) {
   }).then(function (responseMessage) {
     return responseMessage;
   }).catch(function (err) {
-    return new Error(err);
+    return (0, _helpers.createErrorMessage)(err);
   });
 };

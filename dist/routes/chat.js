@@ -41,7 +41,7 @@ chatRouter.post('/messages', upload.single(), function (req, res) {
         // no address could be extracted
         if (address === '') {
           // return new Error('No address found');
-          var errorMessage = (0, _helpers.createErrorMessage)('Make sure you use one of these 3 commands: what\'s the weather in, weather in, weather');
+          var errorMessage = (0, _helpers.createErrorMessage)('Make sure you use one of these 3 commands: what\'s the weather in <Location>, weather in <Location>, <Location> weather');
           res.json(errorMessage);
         } else {
           (0, _apiMethods.getWeather)(address).then(function (result) {

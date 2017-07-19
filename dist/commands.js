@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", {
  * @return {string}
  */
 var returnAddress = function returnAddress(message) {
-  var commands = ["what's the weather in", "weather in", "weather"];
+  var commands = ['what\'s the weather in', 'weather in', 'weather'];
   if (message.includes(commands[0])) {
     return extractAddress(message, commands[0]);
   } else if (message.includes(commands[1])) {
