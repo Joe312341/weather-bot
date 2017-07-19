@@ -9,7 +9,7 @@ Install dependencies:
 
 Start the server
 
-``npm start``
+``DARK_SKY_KEY=<MY_DARK_SKY_KEY> G_MAP_KEY=<G_MAP_KEY> npm start``
 
 # Running tests
 
