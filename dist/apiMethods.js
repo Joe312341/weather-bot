@@ -9,10 +9,6 @@ var _requestPromise = require('request-promise');
 
 var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
-var _config = require('./config');
-
-var _config2 = _interopRequireDefault(_config);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -36,7 +32,7 @@ var greetUser = exports.greetUser = function greetUser(username) {
  */
 var getWeather = exports.getWeather = function getWeather(address) {
 
-  var gmapUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + _config2.default.G_MAP_KEY;
+  var gmapUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + process.env.G_MAP_KEY;
 
   var locationName = void 0;
 
@@ -52,7 +48,7 @@ var getWeather = exports.getWeather = function getWeather(address) {
         lng = _parsedBody$results$.lng;
 
     locationName = parsedBody.results[0].address_components[0].long_name;
-    var darkSkyUrl = 'https://api.darksky.net/forecast/' + _config2.default.DARK_SKY_KEY + '/' + lat + ',' + lng;
+    var darkSkyUrl = 'https://api.darksky.net/forecast/' + process.env.DARK_SKY_KEY + '/' + lat + ',' + lng;
 
     return (0, _requestPromise2.default)(darkSkyUrl);
   }).then(function (darkSkyResponse) {

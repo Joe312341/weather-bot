@@ -1,5 +1,4 @@
 import request from 'request-promise';
-import config from './config';
 
 /**
  * Create a welcome message
@@ -24,7 +23,7 @@ export const greetUser = (username) => {
  */
 export const getWeather = (address) => {
 
-  const gmapUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${config.G_MAP_KEY}`;
+  const gmapUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.G_MAP_KEY}`;
 
   let locationName;
 
@@ -38,7 +37,7 @@ export const getWeather = (address) => {
 
       const { lat, lng } = parsedBody.results[0].geometry.location;
       locationName = parsedBody.results[0].address_components[0].long_name;
-      const darkSkyUrl = `https://api.darksky.net/forecast/${config.DARK_SKY_KEY}/${lat},${lng}`;
+      const darkSkyUrl = `https://api.darksky.net/forecast/${process.env.DARK_SKY_KEY}/${lat},${lng}`;
 
       return request(darkSkyUrl);
 
