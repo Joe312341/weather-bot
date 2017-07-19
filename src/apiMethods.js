@@ -1,7 +1,7 @@
 /* global process */
 import request from 'request-promise';
 import { createErrorMessage } from './helpers.js';
-
+import { gMapErrMsg } from './errorMessages';
 /**
  * Create a welcome message
  * @param {string} username
@@ -20,6 +20,7 @@ export const greetUser = (username) => {
 
 /**
  * Retrieves the current weather for the address
+ * For multiple gMap responses it will take the first address
  * @param {string} address
  * @return {Promise}
  */
@@ -31,14 +32,14 @@ export const getWeather = (address) => {
 
   return request(gmapUrl)
     .then((gmapResponse) => {
-      
+
       const parsedBody = JSON.parse(gmapResponse);
       if(parsedBody.results.length === 0){
-        return Promise.reject('This location does not exist!');
+        return Promise.reject(gMapErrMsg);
       }
 
       const { lat, lng } = parsedBody.results[0].geometry.location;
-      locationName = parsedBody.results[0].address_components[0].long_name;
+      locationName = parsedBody.results[0].formatted_address;
       const darkSkyUrl = `https://api.darksky.net/forecast/${process.env.DARK_SKY_KEY}/${lat},${lng}`;
 
       return request(darkSkyUrl);

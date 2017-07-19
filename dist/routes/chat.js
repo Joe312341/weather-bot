@@ -20,6 +20,8 @@ var _apiMethods = require('../apiMethods');
 
 var _helpers = require('../helpers.js');
 
+var _errorMessages = require('../errorMessages');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var upload = (0, _multer2.default)();
@@ -41,7 +43,7 @@ chatRouter.post('/messages', upload.single(), function (req, res) {
         // no address could be extracted
         if (address === '') {
           // return new Error('No address found');
-          var errorMessage = (0, _helpers.createErrorMessage)('Make sure you use one of these 3 commands: what\'s the weather in <Location>, weather in <Location>, <Location> weather');
+          var errorMessage = (0, _helpers.createErrorMessage)(_errorMessages.noCommandErrMsg);
           res.json(errorMessage);
         } else {
           (0, _apiMethods.getWeather)(address).then(function (result) {

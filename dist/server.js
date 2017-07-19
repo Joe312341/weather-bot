@@ -39,5 +39,5 @@ app.use(function (req, res, next) {
 app.use('/chat', _chat2.default);
 
 app.listen(port, function () {
-  console.log('Listening on port ' + port + '!');
+  console.log('Listening on port ' + port + '!'); // eslint-disable-line
 });

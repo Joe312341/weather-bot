@@ -3,6 +3,7 @@ import multer from 'multer';
 import returnAdress from '../commands';
 import { getWeather, greetUser } from '../apiMethods';
 import { createErrorMessage } from '../helpers.js';
+import { noCommandErrMsg } from '../errorMessages';
 
 const upload = multer();
 const chatRouter = express.Router();
@@ -21,7 +22,7 @@ chatRouter.post('/messages', upload.single(), (req, res) => {
     // no address could be extracted
     if(address === ''){
       // return new Error('No address found');
-      const errorMessage = createErrorMessage('Make sure you use one of these 3 commands: what\'s the weather in <Location>, weather in <Location>, <Location> weather');
+      const errorMessage = createErrorMessage(noCommandErrMsg);
       res.json(errorMessage);
     } else {
       getWeather(address).then((result) => {

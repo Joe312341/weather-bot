@@ -11,6 +11,8 @@ var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
 var _helpers = require('./helpers.js');
 
+var _errorMessages = require('./errorMessages');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -18,7 +20,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {string} username
  * @return {Object}
  */
-/* global process */
 var greetUser = exports.greetUser = function greetUser(username) {
   return {
     'messages': [{
@@ -30,9 +31,11 @@ var greetUser = exports.greetUser = function greetUser(username) {
 
 /**
  * Retrieves the current weather for the address
+ * For multiple gMap responses it will take the first address
  * @param {string} address
  * @return {Promise}
  */
+/* global process */
 var getWeather = exports.getWeather = function getWeather(address) {
 
   var gmapUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + process.env.G_MAP_KEY;
@@ -43,14 +46,14 @@ var getWeather = exports.getWeather = function getWeather(address) {
 
     var parsedBody = JSON.parse(gmapResponse);
     if (parsedBody.results.length === 0) {
-      return Promise.reject('This location does not exist!');
+      return Promise.reject(_errorMessages.gMapErrMsg);
     }
 
     var _parsedBody$results$ = parsedBody.results[0].geometry.location,
         lat = _parsedBody$results$.lat,
         lng = _parsedBody$results$.lng;
 
-    locationName = parsedBody.results[0].address_components[0].long_name;
+    locationName = parsedBody.results[0].formatted_address;
     var darkSkyUrl = 'https://api.darksky.net/forecast/' + process.env.DARK_SKY_KEY + '/' + lat + ',' + lng;
 
     return (0, _requestPromise2.default)(darkSkyUrl);
