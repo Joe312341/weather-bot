@@ -9,21 +9,20 @@ Object.defineProperty(exports, "__esModule", {
  * added for completeness purpose and with the intent to improve this
  * methodology in the future (i.e. created some extract engine)
  * @param {string} message
- * @param {string} command
- * @param {boolean} locationInFront
  * @return {string}
  */
 var returnAddress = function returnAddress(message) {
-  var commands = ['what\'s the weather in', 'weather in', 'weather'];
-  if (message.includes(commands[0])) {
-    return extractAddress(message, commands[0]);
-  } else if (message.includes(commands[1])) {
-    return extractAddress(message, commands[1]);
-  } else if (message.includes(commands[2])) {
-    return extractAddress(message, commands[2], true);
-  } else {
-    return '';
+
+  // inFront mean everything before the command gets treated as the <Location>
+  var commands = [{ text: 'what\'s the weather in', isInFront: false }, { text: 'weather in', isInFront: false }, { text: 'weather', isInFront: true }];
+
+  for (var i = 0; i < commands.length; i++) {
+    if (message.includes(commands[i].text)) {
+      return extractAddress(message, commands[i].text, commands[i].isInFront);
+    }
   }
+
+  return '';
 };
 
 /**
